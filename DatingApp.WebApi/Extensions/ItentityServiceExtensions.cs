@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DatingApp.WebApi.Extensions
 {
-    public static class ItentityServiceExtensions
+    public static class IdentityServiceExtensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {

@@ -9,6 +9,7 @@
           "type": "dotnet",
           "request": "launch",
           "projectPath": "${workspaceFolder}/API.csproj"
+          //"projectPath": "${workspaceFolder}"
       },
       {
           "name": ".NET Core Attach",
