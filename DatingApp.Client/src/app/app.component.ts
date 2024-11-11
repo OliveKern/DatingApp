@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { NavComponent } from "./nav/nav.component";
+import { RouterOutlet } from '@angular/router';
+import { AccountService } from './_services/account.service';
 
 @Component({
   selector: 'app-root',
@@ -11,12 +12,26 @@ import { NavComponent } from "./nav/nav.component";
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit{
-  title = 'DatingApp';
-  
+  title = 'DatingApp'
+  private accountService = inject(AccountService);
   http = inject(HttpClient);
   users: any;
 
   ngOnInit(): void {
+    this.getUsers();
+    this.setCurrentUser();
+  }
+
+  setCurrentUser() {
+    const userString = localStorage.getItem('user');
+
+    if (!userString) return;
+
+    const user = JSON.parse(userString);
+    this.accountService.currentUser.set(user);
+  }
+
+  getUsers() {
     this.http.get('https://localhost:5001/api/users').subscribe({
       next: response => this.users = response,
       error: error => console.log(error),
