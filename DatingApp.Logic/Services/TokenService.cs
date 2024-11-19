@@ -2,12 +2,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using DatingApp.Logic.Contracts;
+using DatingApp.Logic.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DatingApp.Logic.Services
 {
-    public class TokenService(IConfiguration config) : ITokenService
+    public class TokenService(IConfiguration config) : ServiceObject, ITokenService
     {
         public string CreateToken(Entities.Base.AppUser user)
         {

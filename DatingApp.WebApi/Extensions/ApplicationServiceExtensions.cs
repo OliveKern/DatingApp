@@ -9,7 +9,7 @@ namespace DatingApp.WebApi.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddControllers();
-            services.AddDbContext<DatingApp.Logic.DataContext.ProjectDbContext>(opt =>
+            services.AddDbContext<Logic.DataContext.ProjectDbContext>(opt =>
             {
                 opt.UseSqlite(config.GetConnectionString("ConnectionString"));
             });
