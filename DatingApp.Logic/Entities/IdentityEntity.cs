@@ -1,7 +1,7 @@
 ﻿using DatingApp.Logic.Contracts;
 using System.ComponentModel.DataAnnotations;
 
-namespace DatingApp.Logic.Entities.Base
+namespace DatingApp.Logic.Entities
 {
     public abstract class IdentityEntity : IIdentifyable
     {

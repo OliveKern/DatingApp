@@ -2,7 +2,7 @@ using DatingApp.Logic.DataContext;
 
 namespace DatingApp.Logic.Controllers
 {
-    public class ControllerObject : IDisposable
+    public abstract class ControllerObject : IDisposable
     {
         public readonly bool contextOwner;
 
