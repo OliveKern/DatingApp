@@ -29,17 +29,17 @@ namespace DatingApp.WebApi.Controllers
         {
             using var accountsCtrl = new AccountsController(dbContext);
 
-            var user = await accountsCtrl.Login(loginDto, tokenService);
-            if(user == null) 
+            var account = await accountsCtrl.Login(loginDto, tokenService);
+            if(account == null) 
                 return NotFound("Invalid username");
 
-            var pwCorrect = accountsCtrl.CheckPassword(loginDto.Password, user.PasswordSalt, user.PassswordHash);
+            var pwCorrect = accountsCtrl.CheckPassword(loginDto.Password, account.PasswordSalt, account.PasswordHash);
             if(pwCorrect == false) 
                 return NotFound("Invalid password");
 
             return Ok(new UserDto {
-                Username = user.UserName,
-                Token = tokenService.CreateToken(user)
+                Username = account.UserName,
+                Token = tokenService.ProvideToken(account)
             });
         }
     }

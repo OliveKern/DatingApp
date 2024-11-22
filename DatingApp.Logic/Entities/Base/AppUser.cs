@@ -8,7 +8,7 @@ namespace DatingApp.Logic.Entities.Base
         //required laut kurs
         public required string UserName { get; set; } //= string.Empty;
 
-        public required byte[] PassswordHash { get; set; }
+        public required byte[] PasswordHash { get; set; }
         public required byte[] PasswordSalt { get; set; }
         
 

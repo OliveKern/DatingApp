@@ -3,6 +3,8 @@ using System.Security.Claims;
 using System.Text;
 using DatingApp.Logic.Contracts;
 using DatingApp.Logic.Controllers;
+using DatingApp.Logic.Entities.Base;
+using DatingApp.Logic.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -10,7 +12,25 @@ namespace DatingApp.Logic.Services
 {
     public class TokenService(IConfiguration config) : ServiceObject, ITokenService
     {
-        public string CreateToken(Entities.Base.AppUser user)
+        public string ProvideToken(AccountDto account)
+        {
+            var userName = account.UserName;
+
+            var token = CreateToken(userName);
+
+            return token;
+        }
+
+        public string ProvideToken(AppUser user)
+        {
+            var userName = user.UserName;
+
+            var token = CreateToken(userName);
+
+            return token;
+        }
+
+        public string CreateToken(string userName)
         {
             var tokenKey = config["TokenKey"] ?? throw new Exception("Cannot access tokenkey from appsettings");
             if(tokenKey.Length < 64) throw new Exception("Applied tokenKey is not long enough");
@@ -18,7 +38,7 @@ namespace DatingApp.Logic.Services
 
             var claims = new List<Claim>
             {
-                new(ClaimTypes.NameIdentifier, user.UserName)
+                new(ClaimTypes.NameIdentifier, userName)
             };
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);

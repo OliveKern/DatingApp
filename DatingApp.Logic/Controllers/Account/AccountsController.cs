@@ -19,7 +19,7 @@ namespace DatingApp.Logic.Controllers.Account
             var user = new Logic.Entities.Base.AppUser
             {
                 UserName = registerDto.Username.ToLower(),  // ausnahmsweise tolower weil datingapp und nicht spielapp
-                PassswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
             };
 
@@ -28,15 +28,19 @@ namespace DatingApp.Logic.Controllers.Account
 
             return new UserDto {
                 Username = user.UserName,
-                Token = tokenService.CreateToken(user)
+                Token = tokenService.ProvideToken(user)
             };    
         }
 
-        public async Task<AppUser?> Login(LoginDto loginDto, ITokenService tokenService) 
+        public async Task<AccountDto?> Login(LoginDto loginDto, ITokenService tokenService) 
         {     
             var user = await dbContext.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
 
-            return user;
+            return user == null ? null : new AccountDto {
+                UserName = user.UserName,
+                PasswordHash = user.PasswordHash,
+                PasswordSalt = user.PasswordSalt
+            };
         }
 
         public bool CheckPassword(string password, byte[] pwSalt, byte[] pwHash)
