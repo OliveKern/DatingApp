@@ -15,6 +15,9 @@ namespace DatingApp.WebApi.Controllers
         [HttpPost("register")] //account/register
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto, ITokenService tokenService)     //FromQuery, FromBody, etc. tell the http service where to loog for the param data
         {
+            // if(registerDto.Username == null || registerDto.Password == null)
+            //     return BadRequest("Missing Credentials. Please enter Username and Password");
+
             using var accountsCtrl = new AccountsController(dbContext);
             
             if(await accountsCtrl.UserExists(registerDto.Username)) return BadRequest("Username is already taken");
@@ -24,9 +27,12 @@ namespace DatingApp.WebApi.Controllers
             return Ok(userDto);   
         }
 
-        [HttpPost("login")]
+        [HttpPost("login")] //account/login
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto, ITokenService tokenService) 
         {
+            if(loginDto.Username == null || loginDto.Password == null)
+                return BadRequest("Missing Credentials. Please enter Username and Password");
+
             using var accountsCtrl = new AccountsController(dbContext);
 
             var account = await accountsCtrl.Login(loginDto, tokenService);

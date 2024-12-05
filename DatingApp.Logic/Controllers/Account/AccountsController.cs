@@ -33,8 +33,8 @@ namespace DatingApp.Logic.Controllers.Account
         }
 
         public async Task<AccountDto?> Login(LoginDto loginDto, ITokenService tokenService) 
-        {     
-            var user = await dbContext.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+        {   
+            var user = await dbContext.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username!.ToLower());
 
             return user == null ? null : new AccountDto {
                 UserName = user.UserName,
