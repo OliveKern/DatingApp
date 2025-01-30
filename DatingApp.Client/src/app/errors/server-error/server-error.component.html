@@ -1,0 +1,15 @@
+<h4>Internal Server Error</h4>
+@if (error) {
+    <h5 class="text-danger">Error: {{error.message}}</h5>
+    <p class="font-weight-bold">Note: This error refers to a backend problem.</p>
+    <p>What to do next?</p>
+    <ol>
+        <li>Open Chrome dev tools and check network request in network tab</li>
+        <li>Examine the URL of the failing request</li>
+        <li>Reproduce error in postman - If the error is reproducable it comes from the backend</li>
+    </ol>
+    <p class="font-weight-bold">Following is the stack trace - first two lines tell lines of code where the problem occured</p>
+    <code class="mt-5" style="background-color: whitesmoke;">
+        {{error.details}}
+    </code>
+}
