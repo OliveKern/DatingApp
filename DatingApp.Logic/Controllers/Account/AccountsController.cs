@@ -16,20 +16,21 @@ namespace DatingApp.Logic.Controllers.Account
         {
             using var hmac = new HMACSHA512();
 
-            var user = new Logic.Entities.Base.AppUser
-            {
-                UserName = registerDto.Username.ToLower(),  // ausnahmsweise tolower weil datingapp und nicht spielapp
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
-            };
+            // var user = new Logic.Entities.Base.AppUser
+            // {
+            //     UserName = registerDto.Username.ToLower(),  // ausnahmsweise tolower weil datingapp und nicht spielapp
+            //     PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+            //     PasswordSalt = hmac.Key
+            // };
 
-            dbContext.Users.Add(user);
-            await dbContext.SaveChangesAsync();
+            // dbContext.Users.Add(user);
+            // await dbContext.SaveChangesAsync();
 
-            return new UserDto {
-                Username = user.UserName,
-                Token = tokenService.ProvideToken(user)
-            };    
+            // return new UserDto {
+            //     Username = user.UserName,
+            //     Token = tokenService.ProvideToken(user)
+            // }; 
+            return null;
         }
 
         public async Task<AccountDto?> Login(LoginDto loginDto, ITokenService tokenService) 
